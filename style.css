@@ -1,0 +1,685 @@
+/* ============================================
+   RESIDENT EVIL — CATÁLOGO DA FRANQUIA
+   style.css  |  Tema: RE7 Biohazard
+   ============================================ */
+
+/* ---------- FONTE CUSTOMIZADA RE7 ---------- */
+@font-face {
+  font-family: 'ResidentEvil7';
+  src: url('Resident_Evil_7_Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ---------- VARIÁVEIS RE7 ---------- */
+:root {
+  /* Paleta baseada nas imagens do RE7 — madeira podre, amarelo sujo, luz de lanterna */
+  --bg-primary:    #100d08;
+  --bg-secondary:  #181208;
+  --bg-card:       #1c1509;
+  --bg-panel:      #140f06;
+
+  /* Vermelho sangue — presente mas não dominante, como no RE7 */
+  --red-primary:   #8b0000;
+  --red-bright:    #c0392b;
+  --red-dark:      #4a0000;
+  --red-glow:      rgba(139,0,0,0.45);
+
+  /* Amarelo lanterna / sépia — cor dominante do RE7 */
+  --lantern:       #c8890a;
+  --lantern-dim:   #7a5102;
+  --lantern-glow:  rgba(200,137,10,0.3);
+  --sepia-light:   #d4b483;
+  --sepia-mid:     #9a7a4a;
+  --sepia-dark:    #4a3518;
+
+  /* Madeira / terra */
+  --wood:          #2a1e0e;
+  --wood-light:    #3d2c14;
+  --wood-border:   #5a4020;
+  --mud:           #1e1608;
+
+  /* Texto */
+  --text-primary:  #d8c9a8;
+  --text-secondary:#9a8060;
+  --text-muted:    #5a4020;
+
+  /* Bordas */
+  --border:        #2a1e0e;
+  --border-warm:   rgba(200,137,10,0.25);
+
+  /* Tipografia */
+  --font-display:  'Bebas Neue', sans-serif;
+  --font-re7:      'ResidentEvil7', 'Bebas Neue', sans-serif;
+  --font-mono:     'Share Tech Mono', monospace;
+  --font-body:     'Barlow', sans-serif;
+  --radius:        3px;
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ---------- BODY — ATMOSFERA BAKER HOUSE ---------- */
+body {
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+p { line-height: 1.75; color: var(--text-secondary); }
+strong { color: var(--text-primary); }
+
+/* ---------- HEADER — FACHADA DA FAZENDA ---------- */
+.site-header {
+  position: relative;
+  overflow: hidden;
+  padding: 2.5rem 2rem 2rem;
+  border-bottom: 2px solid var(--wood-border);
+}
+
+.small-header { padding: 1.2rem 2rem; }
+
+/* Fundo com as imagens do RE7 em overlay sépia */
+.header-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(10,7,3,0.75) 0%,
+      rgba(10,7,3,0.55) 50%,
+      rgba(10,7,3,0.80) 100%
+    );
+  backdrop-filter: blur(1px);
+}
+
+/* Grade de madeira — imitando as tábuas da fazenda */
+.header-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,137,10,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,137,10,0.03) 1px, transparent 1px),
+    linear-gradient(rgba(90,64,32,0.06) 4px, transparent 4px),
+    linear-gradient(90deg, rgba(90,64,32,0.04) 80px, transparent 80px);
+  background-size: 30px 30px, 30px 30px, 120px 120px, 120px 120px;
+}
+
+/* Linha de luz de lanterna na base do header */
+.header-bg::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--lantern-dim) 20%,
+    var(--lantern) 50%,
+    var(--lantern-dim) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 20px var(--lantern-glow), 0 0 40px rgba(200,137,10,0.1);
+}
+
+.header-content {
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.logo-area {
+  display: flex; align-items: center; gap: 1rem;
+  animation: fadeDown .6s ease both;
+}
+
+.back-btn {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .12em;
+  color: var(--lantern);
+  border: 1px solid var(--wood-border);
+  padding: .35rem .8rem;
+  border-radius: 3px;
+  transition: background .2s, color .2s;
+  white-space: nowrap;
+}
+.back-btn:hover { background: var(--wood-light); color: var(--sepia-light); }
+
+/* Ícone ☣ com brilho de lanterna amarela */
+.logo-icon {
+  font-size: 2.4rem;
+  color: var(--lantern);
+  text-shadow: 0 0 20px var(--lantern-glow), 0 0 40px rgba(200,137,10,0.15);
+  animation: flickerLantern 4s ease-in-out infinite;
+}
+
+/* Imagem de logo no header */
+.header-logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: sepia(0.4) brightness(0.9) drop-shadow(0 0 10px rgba(200,137,10,0.4));
+  animation: flickerLantern 4s ease-in-out infinite;
+}
+
+/* Animação de cintilação de lanterna */
+@keyframes flickerLantern {
+  0%,100% { opacity: 1;   filter: sepia(0.3) brightness(1)   drop-shadow(0 0 10px rgba(200,137,10,0.4)); }
+  25%      { opacity: 0.9; filter: sepia(0.5) brightness(0.85) drop-shadow(0 0 6px  rgba(200,137,10,0.2)); }
+  50%      { opacity: 1;   filter: sepia(0.2) brightness(1.05) drop-shadow(0 0 14px rgba(200,137,10,0.5)); }
+  75%      { opacity: 0.95;filter: sepia(0.4) brightness(0.92) drop-shadow(0 0 8px  rgba(200,137,10,0.3)); }
+}
+
+@keyframes flickerIcon {
+  0%,100% { opacity:1;  text-shadow: 0 0 20px var(--lantern-glow); }
+  25%      { opacity:.85; text-shadow: 0 0 8px var(--lantern-glow); }
+  50%      { opacity:1;  text-shadow: 0 0 28px rgba(200,137,10,0.5); }
+  75%      { opacity:.92; text-shadow: 0 0 12px var(--lantern-glow); }
+}
+
+.logo-icon { animation: flickerIcon 4s ease-in-out infinite; }
+
+.site-title {
+  font-family: var(--font-re7);
+  font-size: clamp(2rem,5vw,4rem);
+  letter-spacing: .1em;
+  line-height: 1;
+  color: #e8dcc8;
+  text-shadow:
+    2px 2px 0 rgba(0,0,0,0.8),
+    0 0 30px rgba(200,137,10,0.2),
+    0 0 60px rgba(200,137,10,0.08);
+}
+
+.site-subtitle {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--lantern-dim);
+  letter-spacing: .18em;
+  margin-top: .3rem;
+  opacity: 0.8;
+}
+
+@keyframes fadeDown {
+  from { opacity:0; transform:translateY(-14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ---------- SEÇÃO FRANQUIA ---------- */
+.franchise-section {
+  border-bottom: 1px solid var(--wood-border);
+  padding: 3.5rem 2rem;
+  position: relative;
+  background: rgba(10, 7, 3, 0.55);
+  backdrop-filter: blur(2px);
+}
+/* Névoa de beira de floresta */
+.franchise-section::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--lantern-dim), transparent);
+  opacity: 0.4;
+}
+
+.franchise-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 3rem;
+  align-items: start;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: .08em;
+  color: var(--sepia-light);
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding-bottom: .5rem;
+}
+.section-title::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 50px; height: 2px;
+  background: linear-gradient(90deg, var(--lantern), transparent);
+  box-shadow: 0 0 8px var(--lantern-glow);
+}
+
+.franchise-text { display: flex; flex-direction: column; gap: 1rem; }
+
+/* Stats — como placas de madeira velha */
+.franchise-stats {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  margin-top: .5rem;
+}
+.stat {
+  background: linear-gradient(160deg, #201608, #140f04);
+  border: 1px solid var(--wood-border);
+  border-radius: var(--radius);
+  padding: .8rem 1.2rem;
+  display: flex; flex-direction: column; gap: .2rem;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.stat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lantern-dim), transparent);
+  opacity: 0.5;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--lantern);
+  letter-spacing: .05em;
+  text-shadow: 0 0 12px var(--lantern-glow);
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--text-muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.franchise-img-wrap {
+  display: flex; flex-direction: column; gap: 1.5rem;
+  position: sticky; top: 1.5rem;
+}
+.franchise-logo {
+  width: 100%;
+  filter: sepia(0.3) brightness(0.9) drop-shadow(0 0 20px rgba(139,0,0,.35));
+}
+
+/* Citação — como uma nota encontrada na fazenda */
+.franchise-quote {
+  background: linear-gradient(135deg, #1c1408, #140f06);
+  border-left: 3px solid var(--lantern-dim);
+  border-bottom: 1px solid var(--wood-border);
+  padding: 1rem 1.2rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  position: relative;
+}
+.franchise-quote::before {
+  content: '"';
+  position: absolute; top: -.3rem; left: .8rem;
+  font-size: 3rem; color: var(--lantern-dim);
+  opacity: 0.3; font-family: Georgia, serif; line-height: 1;
+}
+.franchise-quote p {
+  font-style: italic; font-size: .85rem;
+  color: var(--sepia-mid); margin-bottom: .5rem;
+  padding-left: .5rem;
+}
+.franchise-quote span {
+  font-family: var(--font-mono); font-size: .65rem;
+  color: var(--text-muted); letter-spacing: .08em;
+}
+
+/* ---------- CATÁLOGO ---------- */
+.catalog-section {
+  padding: 3rem 2rem 5rem;
+  position: relative;
+  background: rgba(10, 7, 3, 0.55);
+  backdrop-filter: blur(2px);
+}
+/* Linhas de tábua no fundo */
+.catalog-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent, transparent 119px,
+    rgba(90,64,32,0.025) 120px
+  );
+}
+
+.catalog-inner { max-width: 1200px; margin: 0 auto; }
+
+/* CONTROLES */
+.controls {
+  display: flex; flex-direction: column; gap: 1rem;
+  margin-bottom: 1.2rem;
+  animation: fadeDown .5s .2s ease both;
+}
+.search-wrapper { position: relative; max-width: 460px; }
+.search-icon {
+  position: absolute; left: 1rem; top: 50%;
+  transform: translateY(-50%); pointer-events: none;
+  filter: sepia(1) saturate(0.5);
+}
+.search-input {
+  width: 100%; padding: .7rem 1rem .7rem 2.8rem;
+  background: #181208;
+  border: 1px solid var(--wood-border);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-family: var(--font-mono); font-size: .88rem;
+  letter-spacing: .04em; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.search-input::-webkit-search-cancel-button { display:none; }
+.search-input:focus {
+  border-color: var(--lantern-dim);
+  box-shadow: 0 0 0 3px rgba(200,137,10,0.08), 0 0 12px rgba(200,137,10,0.12);
+}
+
+.filter-buttons { display: flex; flex-wrap: wrap; gap: .5rem; }
+.filter-btn {
+  padding: .4rem 1rem;
+  background: transparent;
+  border: 1px solid var(--wood-border);
+  border-radius: 3px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono); font-size: .72rem;
+  letter-spacing: .12em; cursor: pointer;
+  transition: all .2s;
+}
+.filter-btn:hover {
+  border-color: var(--lantern-dim);
+  color: var(--lantern);
+  background: rgba(200,137,10,0.05);
+}
+.filter-btn.active {
+  background: linear-gradient(135deg, #4a2800, #2a1500);
+  border-color: var(--lantern-dim);
+  color: var(--lantern);
+  box-shadow: 0 0 10px rgba(200,137,10,0.15);
+}
+
+.results-count {
+  font-family: var(--font-mono); font-size: .72rem;
+  color: var(--text-muted); letter-spacing: .1em;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- GRID ---------- */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1.2rem;
+}
+
+/* ---------- CARD — COMO FOTOS VELHAS ENCONTRADAS NA FAZENDA ---------- */
+.game-card {
+  background: linear-gradient(160deg, #201608 0%, #180f05 100%);
+  border: 1px solid var(--wood-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  animation: fadeIn .4s ease both;
+  text-decoration: none;
+  position: relative;
+}
+/* Canto rasgado — detalhe de horror */
+.game-card::after {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 12px 12px 0;
+  border-color: transparent var(--bg-primary) transparent transparent;
+  z-index: 2;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(12px); filter: brightness(0.7); }
+  to   { opacity:1; transform:translateY(0);   filter: brightness(1); }
+}
+
+.game-card:hover {
+  transform: translateY(-6px) rotate(-0.3deg);
+  border-color: var(--lantern-dim);
+  box-shadow:
+    0 10px 36px rgba(0,0,0,.9),
+    0 0 24px rgba(200,137,10,0.12),
+    inset 0 1px 0 rgba(200,137,10,0.08);
+}
+
+.card-img-wrapper {
+  position: relative;
+  width: 100%; aspect-ratio: 3/4; overflow: hidden;
+  background: #0c0a04;
+}
+.card-img-wrapper img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .4s, filter .4s;
+  /* Filtro sépia leve como RE7 */
+  filter: brightness(.8) saturate(.75) sepia(0.15);
+}
+.game-card:hover .card-img-wrapper img {
+  transform: scale(1.05);
+  filter: brightness(.95) saturate(.9) sepia(0.05);
+}
+
+/* Vinheta na imagem */
+.card-img-wrapper::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+
+/* Tags de categoria — tons sujos */
+.card-category {
+  position: absolute; top: .5rem; left: .5rem;
+  padding: .18rem .5rem;
+  font-family: var(--font-mono); font-size: .58rem;
+  letter-spacing: .1em; border-radius: 2px; font-weight: bold;
+  z-index: 1;
+}
+.category-Clássico { background:rgba(30,15,0,0.85); color:#c8890a; border:1px solid #7a5102; }
+.category-Atuais   { background:rgba(0,20,10,0.85); color:#5a9e6a; border:1px solid #2d5e38; }
+.category-Remake   { background:rgba(10,15,25,0.85); color:#6a8eba; border:1px solid #3a5878; }
+.category-Spin-off { background:rgba(20,10,20,0.85); color:#9a6aba; border:1px solid #5a3878; }
+
+.card-year {
+  position: absolute; top: .5rem; right: .5rem;
+  font-family: var(--font-mono); font-size: .62rem;
+  color: rgba(216,201,168,.6);
+  background: rgba(0,0,0,.65);
+  padding: .12rem .35rem; border-radius: 2px;
+  z-index: 1;
+}
+
+.card-footer {
+  padding: .65rem .75rem;
+  display: flex; flex-direction: column; gap: .3rem;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.2));
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1rem; letter-spacing: .04em;
+  color: var(--sepia-light); line-height: 1.2;
+}
+.card-nota {
+  font-family: var(--font-mono); font-size: .8rem;
+  color: var(--lantern);
+}
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state { text-align:center; padding:5rem 2rem; color:var(--text-muted); }
+.empty-state[hidden] { display:none; }
+.empty-icon { display:block; font-size:2.5rem; margin-bottom:1rem; opacity:.25; filter: sepia(1); }
+.empty-state p { font-family:var(--font-mono); font-size:.85rem; letter-spacing:.1em; }
+
+/* ============================================
+   PÁGINA DE DETALHES (jogo.html)
+   ============================================ */
+.detail-main {
+  max-width: 1100px; margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+}
+
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  grid-template-rows: auto auto auto;
+  gap: 1.5rem;
+}
+
+.loading-msg {
+  font-family: var(--font-mono); font-size: .85rem;
+  color: var(--text-muted); letter-spacing: .1em;
+}
+
+/* Painel base dos detalhes */
+.detail-desc, .detail-sinopse, .detail-avaliacao, .detail-platforms, .detail-img-wrap {
+  background: linear-gradient(160deg, rgba(30,21,8,0.88), rgba(22,14,4,0.88));
+  backdrop-filter: blur(4px);
+}
+
+/* Descrição do jogo */
+.detail-desc {
+  grid-column: 1; grid-row: 1;
+  border: 1px solid rgba(200,137,10,0.25);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.detail-desc h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem; letter-spacing: .06em;
+  color: var(--sepia-light); margin-bottom: .4rem;
+  text-shadow: 0 0 20px rgba(200,137,10,0.2);
+}
+.detail-desc .meta {
+  font-family: var(--font-mono); font-size: .72rem;
+  color: var(--text-muted); letter-spacing: .1em; margin-bottom: 1rem;
+}
+.detail-desc p { font-size: .9rem; color: var(--text-secondary); }
+
+/* Imagem do jogo */
+.detail-img-wrap {
+  grid-column: 2; grid-row: 1 / 3;
+  border: 1px solid var(--wood-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.detail-img-wrap img {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  display: block;
+  filter: brightness(.85) sepia(0.1) saturate(0.85);
+}
+.detail-img-caption {
+  padding: 1rem 1rem .9rem;
+  font-family: var(--font-re7);
+  font-size: 1.5rem;
+  color: var(--lantern);
+  letter-spacing: .12em;
+  text-align: center;
+  border-top: 1px solid rgba(200,137,10,0.35);
+  background: linear-gradient(180deg, rgba(0,0,0,0.3), rgba(200,137,10,0.06));
+  text-shadow: 0 0 18px rgba(200,137,10,0.6), 0 0 6px rgba(200,137,10,0.3);
+  line-height: 1.3;
+}
+
+/* Sinopse */
+.detail-sinopse {
+  grid-column: 1; grid-row: 2;
+  border: 1px solid rgba(139,0,0,0.3);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.detail-sinopse h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem; letter-spacing: .08em;
+  color: #c0392b; margin-bottom: .8rem;
+}
+.detail-sinopse p { font-size: .88rem; color: var(--text-secondary); }
+
+/* Avaliação */
+.detail-avaliacao {
+  grid-column: 1; grid-row: 3;
+  border: 1px solid rgba(200,137,10,0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.detail-avaliacao h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem; letter-spacing: .08em;
+  color: var(--lantern); margin-bottom: 1rem;
+}
+
+.rating-row {
+  display: flex; align-items: center; gap: .8rem;
+  margin-bottom: .75rem;
+}
+.rating-label {
+  font-family: var(--font-mono); font-size: .75rem;
+  color: var(--text-muted); letter-spacing: .08em;
+  width: 130px; flex-shrink: 0;
+}
+.rating-bar-bg {
+  flex: 1; height: 5px;
+  background: var(--wood); border-radius: 3px; overflow: hidden;
+}
+.rating-bar-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--lantern-dim), var(--lantern));
+  transition: width .8s ease;
+  box-shadow: 0 0 6px rgba(200,137,10,0.3);
+}
+.rating-num {
+  font-family: var(--font-mono); font-size: .85rem;
+  color: var(--lantern); font-weight: bold; width: 28px; text-align: right;
+}
+
+/* Plataformas */
+.detail-platforms {
+  grid-column: 2; grid-row: 3;
+  border: 1px solid rgba(90,64,32,0.5);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.detail-platforms h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem; letter-spacing: .08em;
+  color: var(--sepia-mid); margin-bottom: 1rem;
+}
+.platform-list {
+  display: flex; flex-direction: column; gap: .5rem;
+}
+.platform-item {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: var(--font-mono); font-size: .78rem;
+  color: var(--text-secondary); letter-spacing: .06em;
+  padding: .4rem .6rem;
+  border: 1px solid var(--wood-border); border-radius: 3px;
+  background: rgba(200,137,10,0.03);
+}
+.platform-item::before { content: '▸'; color: var(--lantern-dim); }
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  border-top: 1px solid var(--wood-border);
+  padding: 1.5rem; text-align: center;
+  font-family: var(--font-mono); font-size: .68rem;
+  color: var(--text-muted); letter-spacing: .1em;
+  background: rgba(5,3,1,0.75);
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- RESPONSIVIDADE ---------- */
+@media (max-width: 768px) {
+  .franchise-inner { grid-template-columns: 1fr; }
+  .franchise-img-wrap { position: static; }
+  .detail-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .detail-img-wrap  { grid-column: 1; grid-row: auto; }
+  .detail-desc      { grid-column: 1; grid-row: auto; }
+  .detail-sinopse   { grid-column: 1; grid-row: auto; }
+  .detail-avaliacao { grid-column: 1; grid-row: auto; }
+  .detail-platforms { grid-column: 1; grid-row: auto; }
+  .detail-img-wrap img { aspect-ratio: 16/9; object-position: top; }
+}
+
+@media (max-width: 500px) {
+  .site-header, .franchise-section, .catalog-section { padding-left: 1rem; padding-right: 1rem; }
+  .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
