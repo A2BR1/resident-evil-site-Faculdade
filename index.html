@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resident Evil — Arquivo da Franquia</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- VÍDEO DE FUNDO (YouTube) -->
+  <div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;overflow:hidden;">
+    <iframe
+      src="https://www.youtube.com/embed/rK9PP3HnrKU?autoplay=1&mute=1&loop=1&playlist=rK9PP3HnrKU&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      style="
+        position:absolute;
+        top:50%; left:50%;
+        width:100vw; height:56.25vw;
+        min-height:100vh; min-width:177.77vh;
+        transform:translate(-50%,-50%);
+        pointer-events:none;
+      "
+    ></iframe>
+  </div>
+  <!-- Overlay escuro sobre o vídeo para manter legibilidade -->
+  <div style="
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-1; pointer-events:none;
+    background: linear-gradient(
+      180deg,
+      rgba(10,7,3,0.72) 0%,
+      rgba(10,7,3,0.60) 40%,
+      rgba(10,7,3,0.72) 100%
+    );
+  "></div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="logo-area">
+        <span class="logo-icon">☣</span>
+        <img
+          src="logo.jpg"
+          alt="Resident Evil Logo"
+          class="header-logo-img"
+          onerror="this.style.display='none'"
+        />
+        <div>
+          <h1 class="site-title">RESIDENT EVIL</h1>
+          <p class="site-subtitle">S.T.A.R.S. DATABASE — ARQUIVO DA FRANQUIA</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SEÇÃO: SOBRE A FRANQUIA -->
+    <section class="franchise-section">
+      <div class="franchise-inner">
+
+        <div class="franchise-text">
+          <h2 class="section-title">Sobre a Franquia</h2>
+          <p>
+            <strong>Resident Evil</strong> é uma das franquias de games mais icônicas e influentes da história dos videogames.
+            Criada pela <strong>Capcom</strong> em 1996, a série praticamente definiu o gênero <em>survival horror</em>,
+            misturando exploração, quebra-cabeças e terror de maneira inigualável.
+          </p>
+          <p>
+            Ao longo de quase três décadas, a franquia evoluiu drasticamente — dos corredores claustrofóbicos da Mansão Spencer
+            com câmeras fixas até a perspectiva em primeira pessoa do RE7 e Village — sem nunca perder sua essência de colocar
+            o jogador sob pressão constante.
+          </p>
+          <p>
+            Com mais de <strong>150 milhões de cópias vendidas</strong>, Resident Evil é a franquia mais vendida da Capcom,
+            tendo gerado filmes, séries, HQs, e uma legião de fãs devotos ao redor do mundo. Cada jogo expande um universo
+            rico de conspirações corporativas, vírus mutagênicos e heróis que enfrentam o impossível.
+          </p>
+
+          <div class="franchise-stats">
+            <div class="stat">
+              <span class="stat-num">1996</span>
+              <span class="stat-label">Ano de estreia</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">30+</span>
+              <span class="stat-label">Títulos lançados</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">150M+</span>
+              <span class="stat-label">Cópias vendidas</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">Capcom</span>
+              <span class="stat-label">Desenvolvedora</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="franchise-img-wrap">
+          <img
+            src="art.jpg"
+            alt="Logo Resident Evil"
+            class="franchise-logo"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Resident_Evil_Logo.png/800px-Resident_Evil_Logo.png'"
+          />
+          <div class="franchise-quote">
+            <p>"Welcome to the family, son."</p>
+            <span>— Jack Baker, Resident Evil 7: Biohazard (2017)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SEÇÃO: CATÁLOGO -->
+    <section class="catalog-section">
+      <div class="catalog-inner">
+
+        <h2 class="section-title">Catálogo de Jogos</h2>
+
+        <!-- Controles -->
+        <div class="controls">
+          <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Buscar jogo por nome..."
+              aria-label="Buscar jogo"
+            />
+          </div>
+          <div class="filter-buttons" role="group" aria-label="Filtrar por categoria">
+            <button class="filter-btn active" data-category="todos">TODOS</button>
+            <button class="filter-btn" data-category="Clássico">CLÁSSICOS</button>
+            <button class="filter-btn" data-category="Atuais">ATUAIS</button>
+            <button class="filter-btn" data-category="Remake">REMAKES</button>
+            <button class="filter-btn" data-category="Spin-off">SPIN-OFFS</button>
+          </div>
+        </div>
+
+        <p class="results-count">Exibindo <span id="countNum">0</span> jogos</p>
+
+        <!-- Grid -->
+        <div class="catalog-grid" id="catalogGrid" aria-label="Catálogo de jogos"></div>
+
+        <!-- Vazio -->
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-icon">☣</span>
+          <p>Nenhum jogo encontrado.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>☣ Resident Evil Arquivo da Franquia &mdash; Trabalho Acadêmico &mdash; FUCAPI 2026</p>
+    <p style="margin-top:.4rem;font-size:.6rem;color:#2e271e;">Notas baseadas no Metascore do <a href="https://www.metacritic.com" target="_blank" style="color:#4a3f30;">Metacritic</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+
+
+  <script src="audio.js"></script>
+</body>
+</html>
