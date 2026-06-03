@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes — Resident Evil</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet" />
+</head>
+<body class="detail-page">
+
+  <!-- VÍDEO DE FUNDO (YouTube) -->
+  <div style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;overflow:hidden;">
+    <iframe
+      src="https://www.youtube.com/embed/rK9PP3HnrKU?autoplay=1&mute=1&loop=1&playlist=rK9PP3HnrKU&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      style="
+        position:absolute;
+        top:50%; left:50%;
+        width:100vw; height:56.25vw;
+        min-height:100vh; min-width:177.77vh;
+        transform:translate(-50%,-50%);
+        pointer-events:none;
+      "
+    ></iframe>
+  </div>
+  <!-- Overlay escuro sobre o vídeo para manter legibilidade -->
+  <div style="
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-1; pointer-events:none;
+    background: linear-gradient(
+      180deg,
+      rgba(10,7,3,0.72) 0%,
+      rgba(10,7,3,0.60) 40%,
+      rgba(10,7,3,0.72) 100%
+    );
+  "></div>
+
+  <!-- HEADER -->
+  <header class="site-header small-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="logo-area">
+        <a href="index.html" class="back-btn" aria-label="Voltar ao catálogo">← VOLTAR</a>
+        <span class="logo-icon">☣</span>
+        <div>
+          <h1 class="site-title">RESIDENT EVIL</h1>
+          <p class="site-subtitle">S.T.A.R.S. DATABASE</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="detail-main">
+    <div class="detail-container" id="detailContainer">
+      <!-- Preenchido pelo JavaScript -->
+      <p class="loading-msg">Carregando dados do arquivo...</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>☣ Resident Evil Arquivo da Franquia &mdash; Trabalho Acadêmico &mdash; FUCAPI 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="detalhe.js"></script>
+  <script src="audio.js"></script>
+
+</body>
+</html>
